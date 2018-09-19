@@ -9,27 +9,66 @@ describe "tests de mariano" {
 		mariano.comprar(caramelo)
 		mariano.comprar(bombon)
 	}
-
-	test "test comprar" {
+	test "comprar" {
 		assert.equals(3, mariano.golosinas().size())
 		assert.that(mariano.golosinas().contains(chocolatin))
 		assert.that(mariano.golosinas().contains(caramelo))
 		assert.that(mariano.golosinas().contains(bombon))
 		assert.notThat(mariano.golosinas().contains(chupetin))
 	}
-	
 	test "probar golosinas" {
 		/* habilitar las lineas anuladas cuando se complete la definicion 
 		 * de las golosinas
 		 */
-//		assert.equals(100, chocolatin.peso())
-//		assert.equals(5, caramelo.peso())
+		assert.equals(100, chocolatin.peso())
+		assert.equals(5, caramelo.peso())
 		assert.equals(15, bombon.peso())
 		mariano.probarGolosinas()
-//		assert.equals(98, chocolatin.peso())
-//		assert.equals(4, caramelo.peso())
+		assert.equals(98, chocolatin.peso())
+		assert.equals(4, caramelo.peso())
 		assert.equals(11, bombon.peso())
 	}
-	
+	test "desechar bombon" {
+		assert.that(mariano.golosinas().contains(bombon))
+		mariano.desechar(bombon)
+		assert.notThat(mariano.golosinas().contains(bombon))
+	}
+	test "bombon y caramelo son golosinas sin TACC" {
+		assert.that(mariano.hayGolosinaSinTACC())
+	}
+	test "no hay precios cuidados, chocolatin vale mas de 10 pesos" {
+		assert.notThat(mariano.preciosCuidados())
+	}
+	test "caramelo es la primer golosina de frutilla" {
+		assert.equals(mariano.golosinaDeSabor("frutilla"),caramelo)
+	}
+	test "caramelo y bombon son golosinas de sabor frutilla" {
+		assert.that(mariano.golosinasDeSabor("frutilla").contains(caramelo))
+		assert.that(mariano.golosinasDeSabor("frutilla").contains(bombon))
+		assert.notThat(mariano.golosinasDeSabor("frutilla").contains(chocolatin))		
+	}
+	test "chocolate y frutilla son los sabores de la bolsa, frutilla no se repite" {
+		assert.that(mariano.sabores().contains("frutilla"))
+		assert.that(mariano.sabores().contains("chocolate"))
+		assert.equals(mariano.sabores().occurrencesOf("frutilla"),1)
+	}
+	test "chocolatin es la golosina mas cara" {
+		assert.equals(mariano.golosinaMasCara(),chocolatin)
+	}
+	test "el peso de las golosinas compradas es 120" {
+		assert.equals(mariano.pesoGolosinas(),120)
+	}
+	test "golosinas faltantes de alfajor, bombon, chocolatin y chupetin son alfajor y chupetin" {
+		assert.that(mariano.golosinasFaltantes([alfajor, bombon, chocolatin, chupetin]).contains(alfajor))
+		assert.that(mariano.golosinasFaltantes([alfajor, bombon, chocolatin, chupetin]).contains(chupetin))
+		assert.notThat(mariano.golosinasFaltantes([alfajor, bombon, chocolatin, chupetin]).contains(bombon))
+		assert.notThat(mariano.golosinasFaltantes([alfajor, bombon, chocolatin, chupetin]).contains(chocolatin))
+	}
+	test "gustos faltantes de melon, chocolate, frutilla y vainilla, son melon y vainilla" {
+		assert.that(mariano.gustosFaltantes(["melon","chocolate","frutilla","vainilla"]).contains("melon"))
+		assert.that(mariano.gustosFaltantes(["melon","chocolate","frutilla","vainilla"]).contains("vainilla"))
+		assert.notThat(mariano.gustosFaltantes(["melon","chocolate","frutilla","vainilla"]).contains("frutilla"))
+		assert.notThat(mariano.gustosFaltantes(["melon","chocolate","frutilla","vainilla"]).contains("chocolate"))
+	}
 }
 
