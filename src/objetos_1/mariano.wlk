@@ -50,29 +50,19 @@ object mariano {
 		return sabores.asSet()
 	}
 	*/
-	method golosinaMasCara(){
-		var masCara = 0
-		var golosinaCara = null
-		bolsaGolosinasCompradas.forEach({golosina => 
-			if (masCara < golosina.precio()) {
-				masCara = golosina.precio()
-				golosinaCara = golosina
-			}
-		})
-		return golosinaCara
-	}
-	method pesoGolosinas() {
-		var pesoBolsaGolosinas = 0
-		bolsaGolosinasCompradas.forEach({golosina => pesoBolsaGolosinas += golosina.peso()})
-		return pesoBolsaGolosinas
-	}
 	
+	method golosinaMasCara() =
+		bolsaGolosinasCompradas.fold(bolsaGolosinasCompradas.first(), {
+			masPesada, golosina => 
+			if (masPesada.peso() > golosina.peso()) return masPesada else return golosina
+			})
+
+	method pesoGolosinas() =
+		bolsaGolosinasCompradas.sum({golosina => golosina.peso()})
+		
 	// Auxiliares
 	method esGolosinaCuidada(unaGolosina) = 10 > unaGolosina.precio()
 	method saboresTotales() {
-		//var saboresTotales = []
-		//bolsaGolosinasCompradas.forEach({golosina => saboresTotales.add(golosina.gusto())})
-		//	return saboresTotales
 		return bolsaGolosinasCompradas.map({golosina => golosina.gusto()})
 	}
 	method golosinasFaltantes(golosinasDeseadas){
