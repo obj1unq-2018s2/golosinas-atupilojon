@@ -108,6 +108,8 @@ object tuttifrutti {
 			return 10
 		}
 	}	
+	// Aca debiste haber resuelto el problema mediante el uso de
+	// Colecciones. La respuesta estaba en pensar en como rotar los sabores.
 	// como manejar el cambio de sabor ??
 	method mordisco() {
 		if (gustoActual == "frutilla") {
